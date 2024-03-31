@@ -30,7 +30,7 @@ int main() {
 //
 //	printf("x = %i\n&pX = %i\n", x, *pX);
 	int x = 1;
-	printf("x = %i\n", x);
+	printf("\nx = %i\n", x);
 	myIncrement(&x);
 	printf("x = %i\n", x);
 
@@ -40,6 +40,6 @@ int main() {
 void myIncrement(int * pInput) 
 {
 	int input_before_increment = ((*pInput)++); 
-	printf("input_before_increment = %i", input_before_increment);
+	printf("input_before_increment = %i");
 }
 
