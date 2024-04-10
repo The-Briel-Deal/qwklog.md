@@ -29,3 +29,7 @@
 ./main toot 
 ./main a b c d e f g 
  u v w x y z 
+./main a b c d e f g 
+º±Z( 
+./main 
+gabrielgabriel 

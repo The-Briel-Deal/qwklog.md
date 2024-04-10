@@ -3,11 +3,9 @@
 #include <string.h>
 
 void addlb(char *str) {
+  char *lb = "\n";
   // Allocate the length of the string passed in + 2 for linebreak and null byte
-  str = (char *)realloc(str, strlen(str) + 2);
-  // Create linebreak in memory
-  char *lb = (char *)malloc(2);
-  strcpy(lb, "\n");
+  str = (char *)realloc(str, strlen(str) + strlen(lb) + 1);
   // Concatenate the linebreak onto the string
   strcat(str, lb);
 }
@@ -15,12 +13,9 @@ void addlb(char *str) {
 void addspace(char *str) {
   char *space = " ";
   // Allocate the length of the string passed in + 2 for linebreak and null byte
-  str = (char *)realloc(str, strlen(str) + 2);
-  // Create linebreak in memory
-  char *lb = (char *)malloc(2);
-  strcpy(lb, space);
+  str = (char *)realloc(str, strlen(str) + strlen(space) + 1);
   // Concatenate the linebreak onto the string
-  strcat(str, lb);
+  strcat(str, space);
 }
 
 void addarg(char *linetowrite, char *nextarg) {
