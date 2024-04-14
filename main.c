@@ -2,33 +2,31 @@
 #include <stdlib.h>
 #include <string.h>
 
-void addlb(char *str) {
+char* addlb(char *str) {
   char *lb = "\n";
   // Allocate the length of the string passed in + 2 for linebreak and null byte
   str = (char *)realloc(str, strlen(str) + strlen(lb) + 1);
   // Concatenate the linebreak onto the string
   strcat(str, lb);
-  printf("Pointer when entering addlb %p\n", &str);
+  return str;
 }
 
-void addspace(char *str) {
+char* addspace(char *str) {
   char *space = " ";
   // Allocate the length of the string passed in + 2 for linebreak and null byte
   str = (char *)realloc(str, strlen(str) + strlen(space) + 1);
   // Concatenate the linebreak onto the string
   strcat(str, space);
-  printf("Pointer when entering addspace %p\n", &str);
+  return str;
 }
 
 char* addarg(char *linetowrite, char *nextarg) {
-  printf("Pointer when entering addarg %p\n", &linetowrite);
   // Allocate the length of the string passed in + 2 for linebreak and null byte
   linetowrite =
       (char *)realloc(linetowrite, strlen(linetowrite) + strlen(nextarg) + 1);
   // Concatenate the linebreak onto the string
   strcat(linetowrite, nextarg);
   // Return linetowrite as realloc gave me a pointer that is potentially different. 
-  printf("Pointer when leaving addarg %p\n", &linetowrite);
   return linetowrite;
 }
 
@@ -53,10 +51,10 @@ int main(int argc, char **argv) {
     // Append this arg onto linetowrite
     linetowrite = addarg(linetowrite, argcopy);
     // Add space onto linetowrite
-    addspace(linetowrite);
+    linetowrite = addspace(linetowrite);
   }
   // Add linebreak using function defined above
-  addlb(linetowrite);
+  linetowrite = addlb(linetowrite);
   // Write this arg to file
   fprintf(fptr, "%s", linetowrite);
   // Free the files pointer in memory
