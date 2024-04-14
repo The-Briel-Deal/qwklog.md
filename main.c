@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+const char filename[] = "test_table.md";
+
 char* addlb(char *str) {
   char *lb = "\n";
   // Allocate the length of the string passed in + 2 for linebreak and null byte
@@ -30,10 +32,10 @@ char* addarg(char *linetowrite, char *nextarg) {
   return linetowrite;
 }
 
-int main(int argc, char **argv) {
+int writeargstofile(int argc, char **argv) {
   // Create a pointer of type FILE to the textfile filemode.txt
   FILE *fptr;
-  fptr = fopen("test_log.txt", "a");
+  fptr = fopen(filename, "a");
   // If file doesn't exist (pointer is null) return
   if (fptr == NULL) {
     return 1;
@@ -59,4 +61,11 @@ int main(int argc, char **argv) {
   fprintf(fptr, "%s", linetowrite);
   // Free the files pointer in memory
   fclose(fptr);
+  return 0;
+}
+
+int main(int argc, char **argv) {
+    writeargstofile(argc, argv);
+    return 0;
+   // Get Bounding Lines For CSV Table From File. 
 }
