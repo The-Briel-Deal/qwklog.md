@@ -4,7 +4,12 @@
 
 const char filename[] = "test_table.md";
 
-char* addlb(char *str) {
+typedef struct LineBounds {
+  int start_line;
+  int end_line;
+} LineBound;
+
+char *addlb(char *str) {
   char *lb = "\n";
   // Allocate the length of the string passed in + 2 for linebreak and null byte
   str = (char *)realloc(str, strlen(str) + strlen(lb) + 1);
@@ -13,7 +18,7 @@ char* addlb(char *str) {
   return str;
 }
 
-char* addspace(char *str) {
+char *addspace(char *str) {
   char *space = " ";
   // Allocate the length of the string passed in + 2 for linebreak and null byte
   str = (char *)realloc(str, strlen(str) + strlen(space) + 1);
@@ -22,13 +27,14 @@ char* addspace(char *str) {
   return str;
 }
 
-char* addarg(char *linetowrite, char *nextarg) {
+char *addarg(char *linetowrite, char *nextarg) {
   // Allocate the length of the string passed in + 2 for linebreak and null byte
   linetowrite =
       (char *)realloc(linetowrite, strlen(linetowrite) + strlen(nextarg) + 1);
   // Concatenate the linebreak onto the string
   strcat(linetowrite, nextarg);
-  // Return linetowrite as realloc gave me a pointer that is potentially different. 
+  // Return linetowrite as realloc gave me a pointer that is potentially
+  // different.
   return linetowrite;
 }
 
@@ -64,8 +70,21 @@ int writeargstofile(int argc, char **argv) {
   return 0;
 }
 
+LineBound getfirsttablebounds(const char *pfilename) {
+  FILE *fptr;
+  fptr = fopen(pfilename, "r");
+  int c;
+  while ((c = fgetc(fptr)) != EOF) {
+    printf("%c", c);
+  }
+  LineBound bounds;
+  bounds.start_line = 10;
+  bounds.end_line = 20;
+  return bounds;
+}
+
 int main(int argc, char **argv) {
-    writeargstofile(argc, argv);
-    return 0;
-   // Get Bounding Lines For CSV Table From File. 
+  // Get Bounding Lines For CSV Table From File.
+  getfirsttablebounds(filename);
+  return 0;
 }
