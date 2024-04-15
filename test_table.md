@@ -6,6 +6,18 @@ Hot dang I *love* cute dogs so much.
 | Day                | Dose    | Strain            |
 | ------------------ | ------- | ----------------- |
 | March 25 2:59PM    | 2tsp    | Green Maeng Da    |
+| March 25 2:59PM    | 2tsp    | Green Maeng Da    |
+| March 25 2:59PM    | 2tsp    | Green Maeng Da    |
+| March 25 2:59PM    | 2tsp    | Green Maeng Da    |
+| March 25 4:53PM    | 2tsp    | Green Maeng Da    |
+| March 25 5:17PM    | 1tsp    | Green Maeng Da    |
+| March 25 6:57PM    | 2tsp    | Green Maeng Da    |
+| March 25 4:53PM    | 2tsp    | Green Maeng Da    |
+| March 25 5:17PM    | 1tsp    | Green Maeng Da    |
+| March 25 6:57PM    | 2tsp    | Green Maeng Da    |
+| March 25 4:53PM    | 2tsp    | Green Maeng Da    |
+| March 25 5:17PM    | 1tsp    | Green Maeng Da    |
+| March 25 6:57PM    | 2tsp    | Green Maeng Da    |
 | March 25 4:53PM    | 2tsp    | Green Maeng Da    |
 | March 25 5:17PM    | 1tsp    | Green Maeng Da    |
 | March 25 6:57PM    | 2tsp    | Green Maeng Da    |

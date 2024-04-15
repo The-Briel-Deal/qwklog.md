@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-const char filename[] = "test_table.md";
+char *filename;
 
 typedef struct LineBounds {
   int start_line;
@@ -71,33 +71,45 @@ int writeargstofile(int argc, char **argv) {
 }
 
 LineBound getfirsttablebounds(const char *pfilename) {
+  // Create pointer to file and read it.
   FILE *fptr;
   fptr = fopen(pfilename, "r");
+  // Declare variable for bounds and set start and end line to -1 so we know
+  // they weren't set.
   LineBound bounds;
   bounds.start_line = -1;
   bounds.end_line = -1;
+  // Declare a single int that will hold all of the characters as we iterate
+  // through them.
   int c;
+  // Declare a integer that tracks the current line we are on as we iterate.
   int currline = 0;
+  // Iterate through until we hit the end of file and run checks of each
+  // character.
   while ((c = fgetc(fptr)) != EOF) {
-    printf("%c", c);
+    // If we hit a new line increment the current line.
     if (c == '\n') {
       currline += 1;
-      printf("%i   ", currline);
     }
+    // If we hit a pipe we know this we where a table stops.
     if ((c == '|') && (bounds.start_line == -1)) {
       bounds.start_line = currline;
     }
+    // Every time we hit a pipe that line will be the new end point.
     if (c == '|') {
       bounds.end_line = currline;
     }
   }
+  // Return the Bounds we got from the previous iteration.
   return bounds;
 }
 
 int main(int argc, char **argv) {
+  // Pull filename out of args. Filename is the first argument.
+  filename = argv[1];
+
   // Get Bounding Lines For CSV Table From File.
   LineBound bounds = getfirsttablebounds(filename);
-  printf("line start: %i", bounds.start_line);
-  printf("line end: %i", bounds.end_line);
+
   return 0;
 }
