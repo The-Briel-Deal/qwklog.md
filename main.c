@@ -28,7 +28,7 @@ char *addlb(char *str) {
 }
 
 char *addspace(char *str) {
-  char *space = " ";
+  char *space = " | ";
   // Allocate the length of the string passed in + 2 for linebreak and null byte
   str = (char *)realloc(str, strlen(str) + strlen(space) + 1);
   // Concatenate the linebreak onto the string
@@ -47,17 +47,13 @@ char *addarg(char *linetowrite, char *nextarg) {
   return linetowrite;
 }
 
-int writeargstofile(int argc, char **argv) {
+char *concatargstotable(int argc, char **argv) {
   // Create a pointer of type FILE to the textfile filemode.txt
   FILE *fptr;
   fptr = fopen(filename, "a");
-  // If file doesn't exist (pointer is null) return
-  if (fptr == NULL) {
-    return 1;
-  }
   // Create Line that will be appended to and written at end
-  char *linetowrite = (char *)malloc(1);
-  strcpy(linetowrite, "");
+  char *linetowrite = (char *)malloc(3);
+  strcpy(linetowrite, "| ");
   // Iterate through all args
   for (int i = 0; i < argc; i++) {
     // Allocate Memory of length arg + 1 so that there is room for null byte
@@ -72,11 +68,7 @@ int writeargstofile(int argc, char **argv) {
   }
   // Add linebreak using function defined above
   linetowrite = addlb(linetowrite);
-  // Write this arg to file
-  fprintf(fptr, "%s", linetowrite);
-  // Free the files pointer in memory
-  fclose(fptr);
-  return 0;
+  return linetowrite;
 }
 
 LineBound getfirsttablebounds(const char *pfilename) {
@@ -184,13 +176,16 @@ int main(int argc, char **argv) {
   // Get Bounding Lines For CSV Table From File.
   LineBound bounds = getfirsttablebounds(filename);
 
-  // TODO: Split the file up into 3 different strings.
+  // Split the file up into 3 different strings.
   DividedFile dividedfile = dividefile(filename, bounds);
 
   printf("This is the Beginning: \n\n%s\n\n", dividedfile.beginning);
   printf("This is the Table: \n\n%s\n\n", dividedfile.table);
   printf("This is the End: \n\n%s\n\n", dividedfile.end);
-  // TODO: Take the middle string (table) and append the record you specify.
+  // TODO (WIP): Take the middle string (table) and append the record you specify.
+  //char newargs[3][128];
+  //char *rowtoadd = concatargstotable(argc, newargs);
+  //printf("%s", rowtoadd);
 
   // TODO: Write this out to same text file and rename/copy the old one.
 
