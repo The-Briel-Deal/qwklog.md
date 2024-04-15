@@ -73,18 +73,31 @@ int writeargstofile(int argc, char **argv) {
 LineBound getfirsttablebounds(const char *pfilename) {
   FILE *fptr;
   fptr = fopen(pfilename, "r");
+  LineBound bounds;
+  bounds.start_line = -1;
+  bounds.end_line = -1;
   int c;
+  int currline = 0;
   while ((c = fgetc(fptr)) != EOF) {
     printf("%c", c);
+    if (c == '\n') {
+      currline += 1;
+      printf("%i   ", currline);
+    }
+    if ((c == '|') && (bounds.start_line == -1)) {
+      bounds.start_line = currline;
+    }
+    if (c == '|') {
+      bounds.end_line = currline;
+    }
   }
-  LineBound bounds;
-  bounds.start_line = 10;
-  bounds.end_line = 20;
   return bounds;
 }
 
 int main(int argc, char **argv) {
   // Get Bounding Lines For CSV Table From File.
-  getfirsttablebounds(filename);
+  LineBound bounds = getfirsttablebounds(filename);
+  printf("line start: %i", bounds.start_line);
+  printf("line end: %i", bounds.end_line);
   return 0;
 }
