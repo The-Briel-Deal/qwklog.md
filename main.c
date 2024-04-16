@@ -106,28 +106,28 @@ LineBound getfirsttablebounds(const char *pfilename) {
 
 DividedFile checkforlowsize(DividedFile dividedfile) {
 
-    // If Memory Allocated - Used Space is less than 64, add another 128 bytes.
-    if ((dividedfile.beginningMemoryAllocated - strlen(dividedfile.beginning)) < 64)
-    {
-	dividedfile.beginningMemoryAllocated += 128;
-	dividedfile.beginning = realloc(dividedfile.beginning, dividedfile.beginningMemoryAllocated);
-    }
+  // If Memory Allocated - Used Space is less than 64, add another 128 bytes.
+  if ((dividedfile.beginningMemoryAllocated - strlen(dividedfile.beginning)) <
+      64) {
+    dividedfile.beginningMemoryAllocated += 128;
+    dividedfile.beginning =
+        realloc(dividedfile.beginning, dividedfile.beginningMemoryAllocated);
+  }
 
-    // If Memory Allocated - Used Space is less than 64, add another 128 bytes.
-    if ((dividedfile.tableMemoryAllocated - strlen(dividedfile.table)) < 64)
-    {
-	dividedfile.tableMemoryAllocated += 128;
-	dividedfile.table= realloc(dividedfile.table, dividedfile.tableMemoryAllocated);
-    }
+  // If Memory Allocated - Used Space is less than 64, add another 128 bytes.
+  if ((dividedfile.tableMemoryAllocated - strlen(dividedfile.table)) < 64) {
+    dividedfile.tableMemoryAllocated += 128;
+    dividedfile.table =
+        realloc(dividedfile.table, dividedfile.tableMemoryAllocated);
+  }
 
-    // If Memory Allocated - Used Space is less than 64, add another 128 bytes.
-    if ((dividedfile.endMemoryAllocated - strlen(dividedfile.end)) < 64)
-    {
-	dividedfile.endMemoryAllocated += 128;
-	dividedfile.end = realloc(dividedfile.end, dividedfile.endMemoryAllocated);
-    }
+  // If Memory Allocated - Used Space is less than 64, add another 128 bytes.
+  if ((dividedfile.endMemoryAllocated - strlen(dividedfile.end)) < 64) {
+    dividedfile.endMemoryAllocated += 128;
+    dividedfile.end = realloc(dividedfile.end, dividedfile.endMemoryAllocated);
+  }
 
-    return dividedfile;
+  return dividedfile;
 }
 
 DividedFile dividefile(const char *pfilename, const LineBound bounds) {
@@ -182,10 +182,22 @@ int main(int argc, char **argv) {
   printf("This is the Beginning: \n\n%s\n\n", dividedfile.beginning);
   printf("This is the Table: \n\n%s\n\n", dividedfile.table);
   printf("This is the End: \n\n%s\n\n", dividedfile.end);
-  // TODO (WIP): Take the middle string (table) and append the record you specify.
-  //char newargs[3][128];
-  //char *rowtoadd = concatargstotable(argc, newargs);
-  //printf("%s", rowtoadd);
+  // TODO (WIP): Take the middle string (table) and append the record you
+  // specify.
+
+  int argstart = 2; 
+  // Get the new count of args to put together as a markdown row. 
+  int newargscount = argc - argstart;
+
+  // Get the new args we will use for the markdown row.
+  char **newargs = malloc(128);
+  int i;
+  for (i = 0; i < argc - argstart; i++) {
+    newargs[i] = malloc(128);
+    strcpy(newargs[i], argv[i + argstart]);
+  }
+  char *rowtoadd = concatargstotable(newargscount, newargs);
+  printf("%s", rowtoadd);
 
   // TODO: Write this out to same text file and rename/copy the old one.
 
