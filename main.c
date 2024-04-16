@@ -189,6 +189,7 @@ void addargstotable(int argc, char **argv, DividedFile dividedfile) {
   char *rowtoadd = getrowtoadd(argc, argv);
   strcat(dividedfile.table, rowtoadd);
 }
+
 int main(int argc, char **argv) {
   // Pull filename out of args. Filename is the first argument.
   filename = argv[1];
@@ -199,11 +200,21 @@ int main(int argc, char **argv) {
   // Split the file up into 3 different strings.
   DividedFile dividedfile = dividefile(filename, bounds);
 
-  // TODO (WIP): Take the middle string (table) and append the record you
+  // Take the middle string (table) and append the record you
   // specify.
   addargstotable(argc, argv, dividedfile);
-  printf("%s", dividedfile.table);
   // TODO: Write this out to same text file and rename/copy the old one.
+  FILE *fptr;
+  fptr = fopen("testoutput.md", "w");
+  char *recombinedtextfile = malloc(1);
+  addarg(recombinedtextfile, dividedfile.beginning);
+  addarg(recombinedtextfile, dividedfile.table);
+  addarg(recombinedtextfile, dividedfile.end);
+  
+  printf("%s", recombinedtextfile);
+  fprintf(fptr, "%s", recombinedtextfile);
+  
+  
 
   // Return 0 if I made it to the end successfully.
   return 0;
