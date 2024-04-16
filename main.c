@@ -67,7 +67,7 @@ char *concatargstotable(int argc, char **argv) {
     linetowrite = addseperator(linetowrite);
   }
   // Add linebreak using function defined above
-  linetowrite = addlb(linetowrite);
+  // linetowrite = addlb(linetowrite);
   return linetowrite;
 }
 
@@ -205,11 +205,11 @@ int main(int argc, char **argv) {
   addargstotable(argc, argv, dividedfile);
   // TODO: Write this out to same text file and rename/copy the old one.
   FILE *fptr;
-  fptr = fopen("testoutput.md", "w");
+  fptr = fopen(filename, "w");
   char *recombinedtextfile = malloc(1);
-  addarg(recombinedtextfile, dividedfile.beginning);
-  addarg(recombinedtextfile, dividedfile.table);
-  addarg(recombinedtextfile, dividedfile.end);
+  recombinedtextfile = addarg(recombinedtextfile, dividedfile.beginning);
+  recombinedtextfile = addarg(recombinedtextfile, dividedfile.table);
+  recombinedtextfile = addarg(recombinedtextfile, dividedfile.end);
   
   printf("%s", recombinedtextfile);
   fprintf(fptr, "%s", recombinedtextfile);
