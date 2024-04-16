@@ -27,7 +27,7 @@ char *addlb(char *str) {
   return str;
 }
 
-char *addspace(char *str) {
+char *addseperator(char *str) {
   char *space = " | ";
   // Allocate the length of the string passed in + 2 for linebreak and null byte
   str = (char *)realloc(str, strlen(str) + strlen(space) + 1);
@@ -52,8 +52,8 @@ char *concatargstotable(int argc, char **argv) {
   FILE *fptr;
   fptr = fopen(filename, "a");
   // Create Line that will be appended to and written at end
-  char *linetowrite = (char *)malloc(3);
-  strcpy(linetowrite, "| ");
+  char *linetowrite = (char *)malloc(4);
+  strcpy(linetowrite, "\n| ");
   // Iterate through all args
   for (int i = 0; i < argc; i++) {
     // Allocate Memory of length arg + 1 so that there is room for null byte
@@ -64,7 +64,7 @@ char *concatargstotable(int argc, char **argv) {
     // Append this arg onto linetowrite
     linetowrite = addarg(linetowrite, argcopy);
     // Add space onto linetowrite
-    linetowrite = addspace(linetowrite);
+    linetowrite = addseperator(linetowrite);
   }
   // Add linebreak using function defined above
   linetowrite = addlb(linetowrite);
@@ -169,24 +169,9 @@ DividedFile dividefile(const char *pfilename, const LineBound bounds) {
   return dividedfile;
 }
 
-int main(int argc, char **argv) {
-  // Pull filename out of args. Filename is the first argument.
-  filename = argv[1];
-
-  // Get Bounding Lines For CSV Table From File.
-  LineBound bounds = getfirsttablebounds(filename);
-
-  // Split the file up into 3 different strings.
-  DividedFile dividedfile = dividefile(filename, bounds);
-
-  printf("This is the Beginning: \n\n%s\n\n", dividedfile.beginning);
-  printf("This is the Table: \n\n%s\n\n", dividedfile.table);
-  printf("This is the End: \n\n%s\n\n", dividedfile.end);
-  // TODO (WIP): Take the middle string (table) and append the record you
-  // specify.
-
-  int argstart = 2; 
-  // Get the new count of args to put together as a markdown row. 
+char *getrowtoadd(int argc, char **argv) {
+  int argstart = 2;
+  // Get the new count of args to put together as a markdown row.
   int newargscount = argc - argstart;
 
   // Get the new args we will use for the markdown row.
@@ -197,8 +182,27 @@ int main(int argc, char **argv) {
     strcpy(newargs[i], argv[i + argstart]);
   }
   char *rowtoadd = concatargstotable(newargscount, newargs);
-  printf("%s", rowtoadd);
+  return rowtoadd;
+}
 
+void addargstotable(int argc, char **argv, DividedFile dividedfile) {
+  char *rowtoadd = getrowtoadd(argc, argv);
+  strcat(dividedfile.table, rowtoadd);
+}
+int main(int argc, char **argv) {
+  // Pull filename out of args. Filename is the first argument.
+  filename = argv[1];
+
+  // Get Bounding Lines For CSV Table From File.
+  LineBound bounds = getfirsttablebounds(filename);
+
+  // Split the file up into 3 different strings.
+  DividedFile dividedfile = dividefile(filename, bounds);
+
+  // TODO (WIP): Take the middle string (table) and append the record you
+  // specify.
+  addargstotable(argc, argv, dividedfile);
+  printf("%s", dividedfile.table);
   // TODO: Write this out to same text file and rename/copy the old one.
 
   // Return 0 if I made it to the end successfully.
