@@ -213,6 +213,8 @@ int main(int argc, char **argv) {
   
   printf("%s", recombinedtextfile);
   fprintf(fptr, "%s", recombinedtextfile);
+
+  // TODO - Bug: Fix the program adding weird text to the start.
   
   
 
