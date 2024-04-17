@@ -185,9 +185,10 @@ char *getrowtoadd(int argc, char **argv) {
   return rowtoadd;
 }
 
-void addargstotable(int argc, char **argv, DividedFile dividedfile) {
+DividedFile addargstotable(int argc, char **argv, DividedFile dividedfile) {
   char *rowtoadd = getrowtoadd(argc, argv);
   strcat(dividedfile.table, rowtoadd);
+  return dividedfile;
 }
 
 int main(int argc, char **argv) {
@@ -202,22 +203,17 @@ int main(int argc, char **argv) {
 
   // Take the middle string (table) and append the record you
   // specify.
-  addargstotable(argc, argv, dividedfile);
+  dividedfile = addargstotable(argc, argv, dividedfile);
   // TODO: Write this out to same text file and rename/copy the old one.
   FILE *fptr;
   fptr = fopen(filename, "w");
   char *recombinedtextfile = malloc(1);
+  strcpy(recombinedtextfile, "");
   recombinedtextfile = addarg(recombinedtextfile, dividedfile.beginning);
   recombinedtextfile = addarg(recombinedtextfile, dividedfile.table);
   recombinedtextfile = addarg(recombinedtextfile, dividedfile.end);
   
-  printf("%s", recombinedtextfile);
   fprintf(fptr, "%s", recombinedtextfile);
-
-  // TODO - Bug: Fix the program adding weird text to the start.
-  
-  
-
   // Return 0 if I made it to the end successfully.
   return 0;
 }
