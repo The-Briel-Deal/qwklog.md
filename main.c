@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -91,9 +92,9 @@ LineBound getfirsttablebounds(const char *pfilename) {
   strcat(backupfilename, "-old");
   FILE *fbackupptr = fopen(backupfilename, "w");
   fprintf(fbackupptr, "");
-  //free(backupfilename);
-  // Iterate through until we hit the end of file and run checks of each
-  // character.
+  // free(backupfilename);
+  //  Iterate through until we hit the end of file and run checks of each
+  //  character.
   while ((c = fgetc(fptr)) != EOF) {
     fputc((char)c, fbackupptr);
     // If we hit a new line increment the current line.
@@ -110,8 +111,8 @@ LineBound getfirsttablebounds(const char *pfilename) {
     }
   }
   // Return the Bounds we got from the previous iteration.
-  //fclose(fptr);
-  //fclose(fbackupptr);
+  // fclose(fptr);
+  // fclose(fbackupptr);
   return bounds;
 }
 
@@ -202,15 +203,22 @@ DividedFile addargstotable(int argc, char **argv, DividedFile dividedfile) {
   return dividedfile;
 }
 
-int main(int argc, char **argv) {
-  // Pull filename out of args. Filename is the first argument.
+bool checkargs(char **argv) {
   filename = argv[1];
-  if ((argv[1] == NULL) || (argv[2] == NULL))
-    {
+  if ((argv[1] == NULL) || (argv[2] == NULL)) {
     printf("You must specify at least 2 arguments."
-	   "\nFor example, 'qwklog ./myfile.md I love cute dogs'\n");
-    return 1;
+           "\nFor example, 'qwklog ./myfile.md I love cute dogs'\n");
+    return true;
+  }
+  return false;
+}
+
+int main(int argc, char **argv) {
+
+  if (checkargs(argv)) {
+	return 1;
     }
+  // Pull filename out of args. Filename is the first argument.
   // Get Bounding Lines For CSV Table From File.
   LineBound bounds = getfirsttablebounds(filename);
 
@@ -228,7 +236,7 @@ int main(int argc, char **argv) {
   recombinedtextfile = addarg(recombinedtextfile, dividedfile.beginning);
   recombinedtextfile = addarg(recombinedtextfile, dividedfile.table);
   recombinedtextfile = addarg(recombinedtextfile, dividedfile.end);
-  // TODO: (Bug) If I run the command without a path I get a segfault.
+  // Print the final text file.
   fprintf(fptr, "%s", recombinedtextfile);
   // Return 0 if I made it to the end successfully.
   return 0;

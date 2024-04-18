@@ -439,6 +439,7 @@ Hot dang I *love* cute dogs so much.
 | toost | too | ssss | 
 | toost | too | ssss | 
 | this | was | run | with | example | args | 
+| test | test | test | 
 
 ## Theres some text before since my goal is to insert into this file
 Just putting some text below here so that I have happy markdown.
