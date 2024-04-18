@@ -205,7 +205,12 @@ DividedFile addargstotable(int argc, char **argv, DividedFile dividedfile) {
 int main(int argc, char **argv) {
   // Pull filename out of args. Filename is the first argument.
   filename = argv[1];
-
+  if ((argv[1] == NULL) || (argv[2] == NULL))
+    {
+    printf("You must specify at least 2 arguments."
+	   "\nFor example, 'qwklog ./myfile.md I love cute dogs'\n");
+    return 1;
+    }
   // Get Bounding Lines For CSV Table From File.
   LineBound bounds = getfirsttablebounds(filename);
 
