@@ -86,16 +86,16 @@ LineBound getfirsttablebounds(const char *pfilename) {
   int currline = 0;
   // Creating backup file here in case something breaks.
   char *backupfilename = malloc(256); // The max length of a filename.
-  strcpy(backupfilename, ".old-");
+  strcpy(backupfilename, "");
   strcat(backupfilename, pfilename);
+  strcat(backupfilename, "-old");
   FILE *fbackupptr = fopen(backupfilename, "w");
+  fprintf(fbackupptr, "");
   //free(backupfilename);
-
-  printf("We are ok here!");
   // Iterate through until we hit the end of file and run checks of each
   // character.
   while ((c = fgetc(fptr)) != EOF) {
-    fputc(c, fbackupptr);
+    fputc((char)c, fbackupptr);
     // If we hit a new line increment the current line.
     if (c == '\n') {
       currline += 1;
