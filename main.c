@@ -84,18 +84,9 @@ LineBound getfirsttablebounds(const char *pfilename) {
   int c;
   // Declare a integer that tracks the current line we are on as we iterate.
   int currline = 0;
-  // Creating backup file here in case something breaks.
-  char *backupfilename = malloc(256); // The max length of a filename.
-  strcpy(backupfilename, ".old-");
-  strcat(backupfilename, pfilename);
-  FILE *fbackupptr = fopen(backupfilename, "w");
-  //free(backupfilename);
-
-  printf("We are ok here!");
   // Iterate through until we hit the end of file and run checks of each
   // character.
   while ((c = fgetc(fptr)) != EOF) {
-    fputc(c, fbackupptr);
     // If we hit a new line increment the current line.
     if (c == '\n') {
       currline += 1;
@@ -110,8 +101,6 @@ LineBound getfirsttablebounds(const char *pfilename) {
     }
   }
   // Return the Bounds we got from the previous iteration.
-  //fclose(fptr);
-  //fclose(fbackupptr);
   return bounds;
 }
 
@@ -206,7 +195,6 @@ int main(int argc, char **argv) {
   // Pull filename out of args. Filename is the first argument.
   filename = argv[1];
 
-  printf("Testing da makefile");
   // Get Bounding Lines For CSV Table From File.
   LineBound bounds = getfirsttablebounds(filename);
 
