@@ -213,6 +213,21 @@ bool checkargs(char **argv) {
   return false;
 }
 
+char *combinedividedfile(DividedFile dividedfile){
+  char *recombinedtextfile = malloc(1);
+  strcpy(recombinedtextfile, "");
+  recombinedtextfile = addarg(recombinedtextfile, dividedfile.beginning);
+  recombinedtextfile = addarg(recombinedtextfile, dividedfile.table);
+  recombinedtextfile = addarg(recombinedtextfile, dividedfile.end);
+  return recombinedtextfile;
+};
+
+void writeoutcombinedfile(char* recombinedtextfile) {
+  FILE *fptr;
+  fptr = fopen(filename, "w");
+  fprintf(fptr, "%s", recombinedtextfile);
+}
+
 int main(int argc, char **argv) {
 
   if (checkargs(argv)) {
@@ -228,16 +243,11 @@ int main(int argc, char **argv) {
   // Take the middle string (table) and append the record you
   // specify.
   dividedfile = addargstotable(argc, argv, dividedfile);
-  // TODO: Write this out to same text file and rename/copy the old one.
-  FILE *fptr;
-  fptr = fopen(filename, "w");
-  char *recombinedtextfile = malloc(1);
-  strcpy(recombinedtextfile, "");
-  recombinedtextfile = addarg(recombinedtextfile, dividedfile.beginning);
-  recombinedtextfile = addarg(recombinedtextfile, dividedfile.table);
-  recombinedtextfile = addarg(recombinedtextfile, dividedfile.end);
   // Print the final text file.
-  fprintf(fptr, "%s", recombinedtextfile);
+  char* recombinedtextfile = combinedividedfile(dividedfile);
+  // TODO: Get the name of each Column.
+  // TODO: Parse the qwklog.conf and make sure the table lines up.
+  writeoutcombinedfile(recombinedtextfile); 
   // Return 0 if I made it to the end successfully.
   return 0;
 }
