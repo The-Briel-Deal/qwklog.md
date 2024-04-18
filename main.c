@@ -206,7 +206,6 @@ int main(int argc, char **argv) {
   // Pull filename out of args. Filename is the first argument.
   filename = argv[1];
 
-  printf("Testing da makefile");
   // Get Bounding Lines For CSV Table From File.
   LineBound bounds = getfirsttablebounds(filename);
 
@@ -224,7 +223,6 @@ int main(int argc, char **argv) {
   recombinedtextfile = addarg(recombinedtextfile, dividedfile.beginning);
   recombinedtextfile = addarg(recombinedtextfile, dividedfile.table);
   recombinedtextfile = addarg(recombinedtextfile, dividedfile.end);
-  printf("Testing da makefile");
   // TODO: (Bug) If I run the command without a path I get a segfault.
   fprintf(fptr, "%s", recombinedtextfile);
   // Return 0 if I made it to the end successfully.
