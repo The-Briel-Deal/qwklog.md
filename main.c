@@ -213,7 +213,7 @@ bool checkargs(char **argv) {
   return false;
 }
 
-char *combinedividedfile(DividedFile dividedfile){
+char *combinedividedfile(DividedFile dividedfile) {
   char *recombinedtextfile = malloc(1);
   strcpy(recombinedtextfile, "");
   recombinedtextfile = addarg(recombinedtextfile, dividedfile.beginning);
@@ -222,7 +222,7 @@ char *combinedividedfile(DividedFile dividedfile){
   return recombinedtextfile;
 };
 
-void writeoutcombinedfile(char* recombinedtextfile) {
+void writeoutcombinedfile(char *recombinedtextfile) {
   FILE *fptr;
   fptr = fopen(filename, "w");
   fprintf(fptr, "%s", recombinedtextfile);
@@ -231,8 +231,8 @@ void writeoutcombinedfile(char* recombinedtextfile) {
 int main(int argc, char **argv) {
 
   if (checkargs(argv)) {
-	return 1;
-    }
+    return 1;
+  }
   // Pull filename out of args. Filename is the first argument.
   // Get Bounding Lines For CSV Table From File.
   LineBound bounds = getfirsttablebounds(filename);
@@ -240,14 +240,18 @@ int main(int argc, char **argv) {
   // Split the file up into 3 different strings.
   DividedFile dividedfile = dividefile(filename, bounds);
 
-  // Take the middle string (table) and append the record you
-  // specify.
+  // Take the middle string (table) and append the args as a new line.
   dividedfile = addargstotable(argc, argv, dividedfile);
+
   // Print the final text file.
-  char* recombinedtextfile = combinedividedfile(dividedfile);
+  char *recombinedtextfile = combinedividedfile(dividedfile);
+
   // TODO: Get the name of each Column.
   // TODO: Parse the qwklog.conf and make sure the table lines up.
-  writeoutcombinedfile(recombinedtextfile); 
+
+  // Finally, write out the combined text file to the file.
+  writeoutcombinedfile(recombinedtextfile);
+
   // Return 0 if I made it to the end successfully.
   return 0;
 }
